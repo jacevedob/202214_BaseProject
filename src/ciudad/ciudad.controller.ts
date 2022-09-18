@@ -21,14 +21,14 @@ export class CiudadController {
   }
 
   @Post()
-  async create(@Body() ciudadDTO: CiudadDto) {
-    const ciudad: CiudadEntity = plainToInstance(CiudadEntity, ciudadDTO);
+  async create(@Body() ciudadDto: CiudadDto) {
+    const ciudad: CiudadEntity = plainToInstance(CiudadEntity, ciudadDto);
     return await this.ciudadService.create(ciudad);
   }
 
   @Put(':id_ciudad')
-  async update(@Param('id_ciudad') id_ciudad: number, @Body() ciudadDTO: CiudadDto) {
-    const ciudad: CiudadEntity = plainToInstance(CiudadEntity, ciudadDTO);
+  async update(@Param('id_ciudad') id_ciudad: number, @Body() ciudadDto: CiudadDto) {
+    const ciudad: CiudadEntity = plainToInstance(CiudadEntity, ciudadDto);
     return await this.ciudadService.update(id_ciudad, ciudad);
   }
 

@@ -3,7 +3,7 @@ import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 't
 
 @Entity()
 export class SupermercadoEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id_supermercado: number;
    
     @Column()

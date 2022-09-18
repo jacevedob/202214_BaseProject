@@ -3,7 +3,7 @@ import { Column, Entity, ManyToMany, PrimaryGeneratedColumn  } from 'typeorm';
 
 @Entity()
 export class CiudadEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id_ciudad: number;
    
     @Column()

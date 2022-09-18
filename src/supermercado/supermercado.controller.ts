@@ -5,11 +5,10 @@ import { SupermercadoDto } from './supermercado.dto';
 import { SupermercadoEntity } from './supermercado.entity';
 import { SupermercadoService } from './supermercado.service';
 
-
 @Controller('supermarkets')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class SupermercadoController { 
-    constructor(private readonly supermercadoService: SupermercadoService) {}
+  constructor(private readonly supermercadoService: SupermercadoService) {}
 
   @Get()
   async findAll() {
@@ -23,13 +22,13 @@ export class SupermercadoController {
 
   @Post()
   async create(@Body()supermercadoDto: SupermercadoDto) {
-    const supermercado = plainToInstance(SupermercadoEntity, supermercadoDto);
+    const supermercado: SupermercadoEntity = plainToInstance(SupermercadoEntity, supermercadoDto);
     return await this.supermercadoService.create(supermercado);
   }
 
   @Put(':id_supermercado')
   async update(@Param('id_supermercado') id_supermercado: number, @Body() supermercadoDto: SupermercadoDto) {
-    const supermercado = plainToInstance(SupermercadoEntity, supermercadoDto);
+    const supermercado: SupermercadoEntity = plainToInstance(SupermercadoEntity, supermercadoDto);
     return await this.supermercadoService.update(id_supermercado, supermercado);
   }
 

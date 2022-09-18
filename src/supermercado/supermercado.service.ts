@@ -23,22 +23,32 @@ export class SupermercadoService {
     }
 
     async create(supermercado: SupermercadoEntity): Promise<SupermercadoEntity> {
-        return await this.supermercadoRepository.save(supermercado);
+        if (supermercado.nombre.length > 10)
+            return await this.supermercadoRepository.save(supermercado);
+        else 
+            throw new BusinessLogicException("La longitud del nombre no es correcta. El supermercado no fue creado", BusinessError.PRECONDITION_FAILED);
     }
 
     async update(id_supermercado: number, supermercado: SupermercadoEntity): Promise<SupermercadoEntity> {
-        const persistedsupermercado: SupermercadoEntity = await this.supermercadoRepository.findOne({where:{id_supermercado}});
-        if (!persistedsupermercado)
+        const persistedSupermercado = await this.supermercadoRepository.findOne({where:{id_supermercado}});
+        if (!persistedSupermercado)
             throw new BusinessLogicException("El supermercado con este identificador no fue encontrado", BusinessError.NOT_FOUND);
-        supermercado.id_supermercado = id_supermercado;
-        return await this.supermercadoRepository.save(supermercado);
+        else if (supermercado.nombre.length > 10){
+            persistedSupermercado.nombre = supermercado.nombre;
+            persistedSupermercado.latitud = supermercado.latitud;
+            persistedSupermercado.longitud = supermercado.longitud;
+            persistedSupermercado.pagina = supermercado.pagina;
+            await this.supermercadoRepository.update(id_supermercado, persistedSupermercado);
+            return persistedSupermercado;
+        }
+        else 
+            throw new BusinessLogicException("La longitud del nombre no es correcta. El supermercado no fue actualizado", BusinessError.PRECONDITION_FAILED);
     }
 
     async delete(id_supermercado: number) {
         const supermercado: SupermercadoEntity = await this.supermercadoRepository.findOne({where:{id_supermercado}});
         if (!supermercado)
             throw new BusinessLogicException("El supermercado con este identificador no fue encontrado", BusinessError.NOT_FOUND);
-
         await this.supermercadoRepository.remove(supermercado);
     }
 }
